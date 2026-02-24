@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">PhotoTinder</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_message">Welcome to PhotoTinder!</string>
+    <string name="welcome_subtitle">Your media, your rules.</string>
+    <string name="photos">Photos</string>
+    <string name="videos">Videos</string>
+    <string name="trash">Trash</string>
+    <string name="info">Info</string>
+    <string name="restart">Restart</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="appearance">Appearance</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="system_theme">System Default</string>
+    <string name="pure_black_mode">Pure Black Mode</string>
+    <string name="developer">Developer</string>
+    <string name="version">Version</string>
+    <string name="settings_subtitle">This can be changed later in settings.</string>
+    <string name="no_photos">No photos found.</string>
+    <string name="no_videos">No videos found.</string>
+    <string name="all_reviewed">All photos reviewed!</string>
+    <string name="all_videos_reviewed">All videos reviewed!</string>
+    <string name="no_trashed_media">Trash is empty.</string>
+    <string name="restore_media_title">Restore Media?</string>
+    <string name="restore_media_subtitle">Do you want to restore this item from the trash?</string>
+    <string name="restore">Restore</string>
+    <string name="cancel">Cancel</string>
+    <string name="empty_trash">Empty Trash</string>
+    <string name="app_info">App Info</string>
+    <string name="ok">OK</string>
+    <string name="developer_name">Mattia Floria</string>
+    <string name="instagram_handle">@mattia_floria</string>
+    <string name="version_name">0.34 Alpha</string>
+    <string name="developers">Developers</string>
+    <string name="restart_photos">Restart Photos</string>
+
+</resources>
