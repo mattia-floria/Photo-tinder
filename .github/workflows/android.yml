@@ -1,38 +1,3 @@
-name: Android CI
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: gradle
-
-    # QUESTO È LO STEP MANCANTE PER FISSARE L'ERRORE ZIPALIGN
-    - name: Set up Android SDK
-      uses: android-actions/setup-android@v3
-
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
-    - name: Build Release APK
-      run: ./gradlew assembleRelease
-
     - name: Sign APK
       uses: r0adkll/sign-android-release@v1
       id: sign_app
@@ -43,20 +8,22 @@ jobs:
         keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
         keyPassword: ${{ secrets.KEY_PASSWORD }}
       env:
-        # Forza l'azione a usare i build tools corretti
-        BUILD_TOOLS_VERSION: "34.0.0" 
+        BUILD_TOOLS_VERSION: "34.0.0"
+
+    # NUOVO STEP: Rinomina il file firmato
+    - name: Rename Signed APK
+      run: mv ${{ steps.sign_app.outputs.signedReleaseFile }} app/build/outputs/apk/release/PhotoTinder.apk
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
         tag_name: latest-build
-        name: "App Pronto all'Uso"
-        body: |
-          Build completata con successo! 🚀
-          Ora lo zipalign dovrebbe funzionare correttamente.
+        name: "PhotoTinder - Latest Build"
+        body: "Signed apk ready to install. Known issues: missing icon, missing translations for some languages"
         draft: false
         prerelease: false
-        files: ${{ steps.sign_app.outputs.signedReleaseFile }}
+        # Carichiamo solo il file rinominato
+        files: app/build/outputs/apk/release/PhotoTinder.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
