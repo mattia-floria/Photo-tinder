@@ -53,7 +53,7 @@ jobs:
       if: github.event_name != 'pull_request'
       with:
         tag_name: latest-build
-        name: "PhotoTinder - Ultima Versione"
+        name: "PhotoTinder - Latest Version"
         body: |
           🚀 **Latest signed build created successfully**
           This apk is ready and signed.
