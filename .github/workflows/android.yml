@@ -1,3 +1,38 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: # Ti permette di farlo partire a comando dalla tab Actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build Release APK
+      run: ./gradlew assembleRelease
+
     - name: Sign APK
       uses: r0adkll/sign-android-release@v1
       id: sign_app
@@ -10,20 +45,21 @@
       env:
         BUILD_TOOLS_VERSION: "34.0.0"
 
-    # NUOVO STEP: Rinomina il file firmato
     - name: Rename Signed APK
       run: mv ${{ steps.sign_app.outputs.signedReleaseFile }} app/build/outputs/apk/release/PhotoTinder.apk
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      if: github.event_name != 'pull_request'
       with:
         tag_name: latest-build
-        name: "PhotoTinder - Latest Build"
-        body: "Signed apk ready to install. Known issues: missing icon, missing translations for some languages"
+        name: "PhotoTinder - Ultima Versione"
+        body: |
+          🚀 **Build completata con successo!**
+          L'APK allegato è firmato e pronto per essere installato sul tuo smartphone.
         draft: false
         prerelease: false
-        # Carichiamo solo il file rinominato
+        # Carica solo il file rinominato, ignorando quelli "unsigned"
         files: app/build/outputs/apk/release/PhotoTinder.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
