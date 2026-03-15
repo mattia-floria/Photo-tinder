@@ -56,6 +56,7 @@ class MediaViewModel(application: Application) : AndroidViewModel(application) {
             val allPhotos = loadFromGallery(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, ::Photo)
             val trashedPhotoUris = _trashedPhotos.value.map { it.uri }.toSet()
             photos.value = allPhotos.filter { it.uri !in trashedPhotoUris }
+            Log.d("MediaViewModel", "Loaded ${photos.value.size} photos")
             val savedPhotoIndex = prefs.getInt(KEY_CURRENT_PHOTO_INDEX, 0)
             currentPhotoIndex = if (savedPhotoIndex < photos.value.size) savedPhotoIndex else 0
 
@@ -63,6 +64,7 @@ class MediaViewModel(application: Application) : AndroidViewModel(application) {
             val allVideos = loadFromGallery(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, ::Video)
             val trashedVideoUris = _trashedVideos.value.map { it.uri }.toSet()
             videos.value = allVideos.filter { it.uri !in trashedVideoUris }
+            Log.d("MediaViewModel", "Loaded ${videos.value.size} videos")
             val savedVideoIndex = prefs.getInt(KEY_CURRENT_VIDEO_INDEX, 0)
             currentVideoIndex = if (savedVideoIndex < videos.value.size) savedVideoIndex else 0
         }
