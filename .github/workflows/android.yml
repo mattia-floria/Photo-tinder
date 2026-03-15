@@ -55,8 +55,9 @@ jobs:
         tag_name: latest-build
         name: "PhotoTinder - Ultima Versione"
         body: |
-          🚀 **Build completata con successo!**
-          L'APK allegato è firmato e pronto per essere installato sul tuo smartphone.
+          🚀 **Latest signed build created successfully**
+          This apk is ready and signed.
+          Known issues: Missing app icon, Missing translations, Missing photos and links in information page.
         draft: false
         prerelease: false
         # Carica solo il file rinominato, ignorando quelli "unsigned"
